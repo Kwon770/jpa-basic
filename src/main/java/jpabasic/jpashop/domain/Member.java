@@ -1,11 +1,12 @@
 package jpabasic.jpashop.domain;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-public class Member extends BaseEntity {
+public class Member {
 
     @Id @GeneratedValue
     @Column(name = "member_id")
@@ -13,21 +14,21 @@ public class Member extends BaseEntity {
 
     private String name;
 
-    private String city;
+    // Period
+    @Embedded
+    private Period workperiod;
 
-    private String street;
+    // Address
+    @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name = "city", column = @Column(name = "home_city")),
+            @AttributeOverride(name = "street", column = @Column(name = "home_street")),
+            @AttributeOverride(name = "zipcode", column = @Column(name = "home_zipcode")),
+    })
+    private Address homeAddress;
 
-    private String zipcode;
-
-    @OneToMany(mappedBy = "member")
-    private List<Order> orders = new ArrayList<>();
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "team_id")
-    private Team team;
-
-    public Member() {
-    }
+    @Embedded
+    private Address workAddress;
 
     public Long getId() {
         return id;
@@ -45,35 +46,19 @@ public class Member extends BaseEntity {
         this.name = name;
     }
 
-    public String getCity() {
-        return city;
+    public Period getWorkperiod() {
+        return workperiod;
     }
 
-    public void setCity(String city) {
-        this.city = city;
+    public void setWorkperiod(Period workperiod) {
+        this.workperiod = workperiod;
     }
 
-    public String getStreet() {
-        return street;
+    public Address getHomeAddress() {
+        return homeAddress;
     }
 
-    public void setStreet(String street) {
-        this.street = street;
-    }
-
-    public String getZipcode() {
-        return zipcode;
-    }
-
-    public void setZipcode(String zipcode) {
-        this.zipcode = zipcode;
-    }
-
-    public Team getTeam() {
-        return team;
-    }
-
-    public void setTeam(Team team) {
-        this.team = team;
+    public void setHomeAddress(Address homeAddress) {
+        this.homeAddress = homeAddress;
     }
 }

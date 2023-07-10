@@ -14,21 +14,8 @@ public class Member {
 
     private String name;
 
-    // Period
     @Embedded
-    private Period workperiod;
-
-    // Address
-    @Embedded
-    @AttributeOverrides({
-            @AttributeOverride(name = "city", column = @Column(name = "home_city")),
-            @AttributeOverride(name = "street", column = @Column(name = "home_street")),
-            @AttributeOverride(name = "zipcode", column = @Column(name = "home_zipcode")),
-    })
-    private Address homeAddress;
-
-    @Embedded
-    private Address workAddress;
+    private Address address;
 
     public Long getId() {
         return id;
@@ -46,19 +33,11 @@ public class Member {
         this.name = name;
     }
 
-    public Period getWorkperiod() {
-        return workperiod;
+    public Address getAddress() {
+        return address;
     }
 
-    public void setWorkperiod(Period workperiod) {
-        this.workperiod = workperiod;
-    }
-
-    public Address getHomeAddress() {
-        return homeAddress;
-    }
-
-    public void setHomeAddress(Address homeAddress) {
-        this.homeAddress = homeAddress;
+    public void setAddress(Address address) {
+        this.address = address;
     }
 }
